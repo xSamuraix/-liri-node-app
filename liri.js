@@ -1,6 +1,6 @@
-var request = require('request');
-var keys = require('./keys.js');
-var fs = require('fs');
+var request = require("request");
+var keys = require("./keys.js");
+var fs = require("fs");
 
 var liriCommand = process.argv[2];
 
@@ -12,6 +12,7 @@ for (var i = 3; i < process.argv.length; i++) {
 }
 
 var name = arr.join("-");
+console.log(name);
 
 if (liriCommand === "my-tweets") {
   tweets();
@@ -22,19 +23,19 @@ if (liriCommand === "my-tweets") {
 } else if (liriCommand === "do-what-it-says") {
   doSomething();
 } else {
-  console.log('Undefined argument');
+  console.log("Undefined argument");
 }
 
 function tweets() {
   //Display last 20 Tweets
   // console.log(name.replace(/"/g,''));'onepannnman'
   var params = {
-    screen_name: name.replace(/"/g, '')
+    screen_name: name.replace(/"/g, "")
   };
-	if (name === ''){
-		params.screen_name = 'onepannnman'
+	if (name === ""){
+		params.screen_name = "onepannnman"
 	}
-  keys.twitterKeys.get('statuses/user_timeline', params, function(error, tweets, response) {
+  keys.twitterKeys.get("statuses/user_timeline", params, function(error, tweets, response) {
     if (!error) {
 			appendData(tweets);
       for (var i = 0; i < tweets.length; i++) {
@@ -71,16 +72,16 @@ function omdb() {
 
 function getSong() {
   var obj = {
-    type: 'track',
+    type: "track",
     query: name
   }
   if (name === "") {
-		obj.query = 'Ace-of-Base';
+		obj.query = "Ace-of-Base";
   }
 
   keys.spotifyKeys.search(obj, function(err, data) {
     if (err) {
-      return console.log('Error occurred: ' + err);
+      return console.log("Error occurred: " + err);
     }
 		appendData(data);
 		//name of the artist
@@ -110,14 +111,14 @@ function doSomething() {
     liriCommand = dataArr[0];
     // console.log(liriCommand);
     name = dataArr[1];
-    if (liriCommand === 'spotify-this-song') {
+    if (liriCommand === "spotify-this-song") {
       getSong();
-    } else if (liriCommand === 'movie-this') {
+    } else if (liriCommand === "movie-this") {
       omdb();
-    } else if (liriCommand === 'my-tweets') {
+    } else if (liriCommand === "my-tweets") {
       tweets();
     } else {
-      console.log('invalid entry');
+      console.log("invalid entry");
     }
   });
 
